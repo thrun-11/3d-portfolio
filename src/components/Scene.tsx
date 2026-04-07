@@ -101,9 +101,11 @@ function SceneOrbitControls({ enabled }: { enabled: boolean }) {
       enableZoom={false}
       enablePan={false}
       autoRotate={false}
+      minDistance={3.8}
+      maxDistance={3.8}
       minPolarAngle={Math.PI / 3}
       maxPolarAngle={Math.PI / 1.8}
-      target={[0, -0.1, 0]}
+      target={[0.4, 0.1, 0]}
       dampingFactor={0.08}
       enableDamping
     />

@@ -51,7 +51,7 @@ export function HeroSection({ rotation, blendshapes, isTracking }: HeroSectionPr
               transition={{ delay: 0.3 }}
             >
               <p className="text-[#818CF8] font-medium mb-3 text-sm tracking-widest uppercase font-[Space_Grotesk]">
-                Full Stack Developer
+                AI Engineer/Full Stack Developer
               </p>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 font-[Space_Grotesk] leading-[1.1]">
                 {personalInfo.name.split(' ')[0]}{' '}
@@ -124,12 +124,7 @@ export function HeroSection({ rotation, blendshapes, isTracking }: HeroSectionPr
           </motion.div>
 
           {/* Right: 3D Avatar */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative h-[550px] lg:h-[700px] lg:order-2 order-1"
-          >
+          <div className="relative h-[550px] lg:h-[700px] lg:order-2 order-1 animation-fade-up">
             {/* Glow ring behind avatar */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-[80%] h-[80%] rounded-full opacity-30 blur-[60px]"
@@ -140,7 +135,7 @@ export function HeroSection({ rotation, blendshapes, isTracking }: HeroSectionPr
             <div className="relative h-full">
               <Scene rotation={rotation} blendshapes={blendshapes} isTracking={isTracking} enableOrbitControls={true} />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 

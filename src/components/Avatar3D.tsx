@@ -24,7 +24,9 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
   const neckRef = useRef<THREE.Bone | null>(null);
   const spineRef = useRef<THREE.Bone | null>(null);
   const rightArmRef = useRef<THREE.Bone | null>(null);
+  const rightForeArmRef = useRef<THREE.Bone | null>(null);
   const leftArmRef = useRef<THREE.Bone | null>(null);
+  const leftForeArmRef = useRef<THREE.Bone | null>(null);
   const idleTimeRef = useRef(0);
   const blendshapeMeshes = useRef<THREE.SkinnedMesh[]>([]);
   const waveTimeRef = useRef(0);
@@ -89,9 +91,17 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
           rightArmRef.current = object;
           boneRestRotations.current['RightArm'] = object.rotation.clone();
         }
+        if (name === 'RightForeArm' && !rightForeArmRef.current) {
+          rightForeArmRef.current = object;
+          boneRestRotations.current['RightForeArm'] = object.rotation.clone();
+        }
         if (name === 'LeftArm' && !leftArmRef.current) {
           leftArmRef.current = object;
           boneRestRotations.current['LeftArm'] = object.rotation.clone();
+        }
+        if (name === 'LeftForeArm' && !leftForeArmRef.current) {
+          leftForeArmRef.current = object;
+          boneRestRotations.current['LeftForeArm'] = object.rotation.clone();
         }
       }
       if (object instanceof THREE.SkinnedMesh && object.morphTargetDictionary) {
@@ -170,30 +180,26 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
   // Handle click on avatar
   const handleClick = useCallback((event: ThreeEvent<MouseEvent>) => {
     event.stopPropagation();
+    if (reactionCooldownRef.current > 0 || isTracking) return;
 
-    // Cooldown check — prevent spam
-    if (reactionCooldownRef.current > 0) return;
-
-    const clickedName = event.object.name || '';
-    // Also check parent names for bone identification
-    let checkName = clickedName;
-    let parent = event.object.parent;
-    while (parent && !checkName) {
-      checkName = parent.name;
-      parent = parent.parent;
-    }
-
-    const reaction = getClickRegion(clickedName || checkName);
-    console.log('[Avatar3D] Clicked:', clickedName, '→ Reaction:', reaction);
-
-    reactionRef.current = reaction;
+    // Always trigger the wave greeting on click
+    reactionRef.current = 'wave';
     reactionTimeRef.current = 0;
     reactionCooldownRef.current = 2.0; // 2 second cooldown
-  }, []);
+  }, [isTracking]);
 
   // Per-frame animation
   useFrame((state, delta) => {
     if (!group.current) return;
+
+    // Pause the idle animation exactly when face tracking is active per user request
+    const actionNames = Object.keys(actions);
+    if (actionNames.length > 0) {
+      const idleAction = actions[actionNames[0]];
+      if (idleAction) {
+        idleAction.paused = isTracking;
+      }
+    }
 
     // Update cooldown
     if (reactionCooldownRef.current > 0) {
@@ -206,23 +212,53 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
       const t = waveTimeRef.current;
 
       if (t < 3.0) {
-        const waveProgress = Math.min(t / 0.8, 1);
-        const waveDown = t > 2.2 ? Math.min((t - 2.2) / 0.8, 1) : 0;
-        const armRaise = waveProgress * (1 - waveDown);
+        const waveProgress = Math.min(t / 0.5, 1);
+        const waveDown = t > 2.5 ? Math.min((t - 2.5) / 0.5, 1) : 0;
+        const armRaise = waveProgress * (1 - waveDown); // Goes 0 -> 1 -> 0
 
-        rightArmRef.current.rotation.z = THREE.MathUtils.lerp(
-          rightArmRef.current.rotation.z,
-          -2.2 * armRaise,
-          0.1
-        );
+        // Raise arm using pure X axis 
+        // Restore perfect upper arm base
         rightArmRef.current.rotation.x = THREE.MathUtils.lerp(
           rightArmRef.current.rotation.x,
-          -0.8 * armRaise,
-          0.1
+          0.6,
+          armRaise
+        );
+        rightArmRef.current.rotation.z = THREE.MathUtils.lerp(
+          rightArmRef.current.rotation.z,
+          -0.5,
+          armRaise
+        );
+        rightArmRef.current.rotation.y = THREE.MathUtils.lerp(
+          rightArmRef.current.rotation.y,
+          0,
+          armRaise
         );
 
-        if (t > 0.5 && t < 2.2) {
-          rightArmRef.current.rotation.z += Math.sin(t * 8) * 0.15;
+        if (rightForeArmRef.current) {
+          // Z is the true pitch axis for the elbow! positive Z bends UP!
+          // Flip Z to negative to bend forward instead of backward
+          rightForeArmRef.current.rotation.x = THREE.MathUtils.lerp(
+            rightForeArmRef.current.rotation.x,
+            -1.0,  // Bend RIGHT and UP
+            armRaise
+          );
+          rightForeArmRef.current.rotation.z = THREE.MathUtils.lerp(
+            rightForeArmRef.current.rotation.z,
+            -1,
+            armRaise
+          );
+          rightForeArmRef.current.rotation.y = THREE.MathUtils.lerp(
+            rightForeArmRef.current.rotation.y,
+            1,
+            armRaise
+          );
+        }
+
+        if (t > 0.5 && t < 2.5) {
+          // Clean, friendly side-to-side wave
+          if (rightForeArmRef.current) {
+            rightForeArmRef.current.rotation.x += Math.sin(t * 8) * 0.5 * armRaise;
+          }
         }
 
         if (t > 0.3 && t < 2.5) {
@@ -309,20 +345,26 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
           case 'wave':
             // Wave greeting (same as initial wave but on right arm)
             if (rightArmRef.current) {
-              const waveIntensity = intensity;
-              rightArmRef.current.rotation.z = THREE.MathUtils.lerp(
-                rightArmRef.current.rotation.z,
-                -2.2 * waveIntensity,
-                0.12
-              );
-              rightArmRef.current.rotation.x = THREE.MathUtils.lerp(
-                rightArmRef.current.rotation.x,
-                -0.8 * waveIntensity,
-                0.12
-              );
-              // Wiggle
-              if (t > 0.2 && t < duration * 0.6) {
-                rightArmRef.current.rotation.z += Math.sin(t * 10) * 0.15 * waveIntensity;
+              const waveProgress = Math.min(t / 0.4, 1);
+              const waveDown = t > 1.6 ? Math.min((t - 1.6) / 0.4, 1) : 0;
+              const blendWeight = waveProgress * (1 - waveDown) * intensity;
+
+              // Perfect wave math
+              rightArmRef.current.rotation.x = THREE.MathUtils.lerp(rightArmRef.current.rotation.x, 0.6, blendWeight);
+              rightArmRef.current.rotation.z = THREE.MathUtils.lerp(rightArmRef.current.rotation.z, -0.5, blendWeight);
+              rightArmRef.current.rotation.y = THREE.MathUtils.lerp(rightArmRef.current.rotation.y, 0, blendWeight);
+
+              if (rightForeArmRef.current) {
+                // Apply the exact forearm tuning you provided
+                rightForeArmRef.current.rotation.x = THREE.MathUtils.lerp(rightForeArmRef.current.rotation.x, -1.0, blendWeight);
+                rightForeArmRef.current.rotation.z = THREE.MathUtils.lerp(rightForeArmRef.current.rotation.z, -1.0, blendWeight);
+                rightForeArmRef.current.rotation.y = THREE.MathUtils.lerp(rightForeArmRef.current.rotation.y, 1.0, blendWeight);
+              }
+              // Clean, friendly side-to-side wave
+              if (t > 0.2 && t < duration * 0.8) {
+                if (rightForeArmRef.current) {
+                  rightForeArmRef.current.rotation.x += Math.sin(t * 8) * 0.5 * blendWeight;
+                }
               }
             }
             // Happy face during wave
@@ -344,20 +386,25 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
     // ── Face Tracking Mode ──
     if (isTracking) {
       // Apply head rotation from tracking
-      if (headRef.current) {
-        // Negate pitch to fix upward head tilt — MediaPipe Y axis is inverted
-        const correctedRotation = { ...rotation, pitch: -rotation.pitch };
-        const targetEuler = toEuler(correctedRotation);
-        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, targetEuler.x, 0.25);
-        headRef.current.rotation.y = THREE.MathUtils.lerp(headRef.current.rotation.y, targetEuler.y, 0.25);
-        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, targetEuler.z, 0.25);
+      if (headRef.current && boneRestRotations.current['Head']) {
+        const targetEuler = toEuler({ ...rotation, pitch: rotation.pitch - 0.2 });
+        const targetX = boneRestRotations.current['Head'].x + targetEuler.x;
+        const targetY = boneRestRotations.current['Head'].y + targetEuler.y;
+        const targetZ = boneRestRotations.current['Head'].z + targetEuler.z;
+
+        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, targetX, 0.4);
+        headRef.current.rotation.y = THREE.MathUtils.lerp(headRef.current.rotation.y, targetY, 0.4);
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, targetZ, 0.4);
       }
-      if (neckRef.current) {
-        const correctedRotation = { ...rotation, pitch: -rotation.pitch };
-        const targetEuler = toEuler(correctedRotation);
-        neckRef.current.rotation.x = targetEuler.x * 0.4;
-        neckRef.current.rotation.y = targetEuler.y * 0.4;
-        neckRef.current.rotation.z = targetEuler.z * 0.3;
+      if (neckRef.current && boneRestRotations.current['Neck']) {
+        const targetEuler = toEuler({ ...rotation, pitch: rotation.pitch - 0.2 });
+        const targetX = boneRestRotations.current['Neck'].x + targetEuler.x * 0.4;
+        const targetY = boneRestRotations.current['Neck'].y + targetEuler.y * 0.4;
+        const targetZ = boneRestRotations.current['Neck'].z + targetEuler.z * 0.3;
+
+        neckRef.current.rotation.x = THREE.MathUtils.lerp(neckRef.current.rotation.x, targetX, 0.4);
+        neckRef.current.rotation.y = THREE.MathUtils.lerp(neckRef.current.rotation.y, targetY, 0.4);
+        neckRef.current.rotation.z = THREE.MathUtils.lerp(neckRef.current.rotation.z, targetZ, 0.4);
       }
 
       // Apply ALL blendshapes from face tracking (expression mirroring)
@@ -398,7 +445,7 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
   });
 
   return (
-    <group ref={group} position={[0, -1.35, 0]} scale={1.25} onClick={handleClick}>
+    <group ref={group} rotation={[0, 0.45, 0]} position={[0.4, -1.35, 0]} scale={1.25} onClick={handleClick}>
       <primitive object={scene} />
     </group>
   );

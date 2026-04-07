@@ -50,7 +50,7 @@ export function calculateHeadRotation(landmarks: FaceLandmark[]): RotationAngles
   // Calculate yaw (left-right rotation)
   const faceWidth = Math.abs(leftEye.x - rightEye.x);
   const noseOffset = (noseTip.x - (leftEye.x + rightEye.x) / 2);
-  const yaw = (noseOffset / faceWidth) * Math.PI * 0.8; // Scale to radians
+  const yaw = -(noseOffset / faceWidth) * Math.PI * 0.8; // Set to negative to mirror user's head correctly
 
   // Calculate pitch (up-down rotation)
   const faceHeight = Math.abs(forehead.y - chin.y);
