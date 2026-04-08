@@ -20,88 +20,40 @@ export function HeroSection({ rotation, blendshapes, isTracking }: HeroSectionPr
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #06060b 0%, #0d0d1a 40%, #0a0a14 100%)' }}
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20 pb-16"
+      style={{ backgroundColor: '#0e0e0e' }}
     >
-      {/* Ambient gradient orbs */}
-      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
-        style={{ background: 'radial-gradient(circle, #818CF8 0%, transparent 70%)' }} />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full opacity-15 blur-[100px]"
-        style={{ background: 'radial-gradient(circle, #22D3EE 0%, transparent 70%)' }} />
+      {/* Sophisticated Ambient Glows */}
+      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary-container/10 rounded-full blur-[150px] pointer-events-none" />
 
-      {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-          backgroundSize: '60px 60px'
-        }} />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-32 relative z-10">
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8 lg:order-1 order-2"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <p className="text-[#818CF8] font-medium mb-3 text-sm tracking-widest uppercase font-[Space_Grotesk]">
-                AI Engineer/Full Stack Developer
-              </p>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 font-[Space_Grotesk] leading-[1.1]">
-                {personalInfo.name.split(' ')[0]}{' '}
-                <span className="gradient-text">{personalInfo.name.split(' ').slice(1).join(' ')}</span>
-              </h1>
-              <h2 className="text-xl md:text-2xl text-[#94A3B8] font-light leading-relaxed">
-                {personalInfo.tagline}
-              </h2>
-            </motion.div>
+        {/* Left Column: Content */}
+        <motion.div
+          className="lg:col-span-7 flex flex-col items-start gap-12 lg:order-1 order-2"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="space-y-6">
+            <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary font-medium opacity-80">
+              FULL STACK & MACHINE LEARNING
+            </span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[-0.04em] text-on-surface leading-[0.95] drop-shadow-glow">
+              {personalInfo.name.split(' ')[0]} {personalInfo.name.split(' ').slice(1).join(' ')}.<br />
+              <span className="text-on-surface-variant tracking-[-0.03em] mt-2 block drop-shadow-none" style={{ fontSize: '0.65em' }}>Building the future of AI.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-on-surface-variant max-w-xl font-light leading-relaxed">
+              Architecting intelligent systems and immersive digital experiences with technical precision and editorial aesthetics.
+            </p>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-base text-[#64748B] leading-relaxed max-w-lg"
-            >
-              {personalInfo.bio.split('.')[0]}.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap gap-4"
-            >
-              <button
-                onClick={() => scrollToSection('projects')}
-                className="px-8 py-3 rounded-lg font-medium text-white transition-all duration-300
-                  hover:scale-105 active:scale-95 glow-blue"
-                style={{ background: 'linear-gradient(135deg, #818CF8, #6366F1)' }}
-              >
-                View My Work
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="px-8 py-3 bg-white/[0.04] text-[#F1F5F9] border border-white/[0.1] rounded-lg font-medium
-                  hover:bg-white/[0.08] hover:border-white/[0.2] transition-all duration-300
-                  hover:scale-105 active:scale-95 backdrop-blur-sm"
-              >
-                Get In Touch
-              </button>
-            </motion.div>
-
-            {/* Social Links */}
+            {/* Social Links ported to Left Side */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
-              className="flex gap-3 pt-2"
+              className="flex gap-4 pt-4"
             >
               {[
                 { icon: FaGithub, href: `https://${personalInfo.github}` },
@@ -113,28 +65,51 @@ export function HeroSection({ rotation, blendshapes, isTracking }: HeroSectionPr
                   href={social.href}
                   target={social.href.startsWith('mailto') ? undefined : '_blank'}
                   rel="noopener noreferrer"
-                  className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[#64748B]
-                    hover:text-[#818CF8] hover:border-[#818CF8]/30 hover:bg-[#818CF8]/5
-                    transition-all duration-300"
+                  className="text-on-surface-variant hover:text-primary transition-colors duration-300"
                 >
                   <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right: 3D Avatar */}
-          <div className="relative h-[550px] lg:h-[700px] lg:order-2 order-1 animation-fade-up">
-            {/* Glow ring behind avatar */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-[80%] h-[80%] rounded-full opacity-30 blur-[60px]"
-                style={{ background: 'radial-gradient(circle, #818CF8 0%, #6366F1 30%, transparent 70%)' }} />
-            </div>
+          <div className="flex flex-wrap gap-6">
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="group relative px-10 py-5 bg-primary text-on-primary rounded-full font-bold text-sm tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(198,198,199,0.1)] hover:shadow-[0_0_40px_rgba(198,198,199,0.3)] active:scale-95"
+            >
+              View My Work
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="px-10 py-5 bg-surface-container-high border border-white/5 text-on-surface rounded-full font-bold text-sm tracking-widest uppercase transition-all hover:bg-surface-bright active:scale-95"
+            >
+              Get In Touch
+            </button>
+          </div>
+        </motion.div>
 
-            {/* 3D Scene */}
-            <div className="relative h-full">
-              <Scene rotation={rotation} blendshapes={blendshapes} isTracking={isTracking} enableOrbitControls={true} />
-            </div>
+        {/* Right Column: Avatar/3D Slot */}
+        <div className="lg:col-span-5 relative flex justify-center items-center h-[550px] lg:h-[800px] lg:order-2 order-1 animation-fade-up">
+          {/* Glowing Placeholder Ring (Kept from Stitch for depth) */}
+          <div className="absolute w-[300px] h-[300px] md:w-[450px] md:h-[450px] rounded-full border border-primary/20 flex justify-center items-center pointer-events-none">
+            <div className="absolute w-[240px] h-[240px] md:w-[380px] md:h-[380px] rounded-full border border-primary/10"></div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/5 via-transparent to-primary/10 blur-xl"></div>
+          </div>
+
+          {/* 3D Scene */}
+          <div className="relative w-[150%] h-[120%] -right-[15%]">
+            <Scene rotation={rotation} blendshapes={blendshapes} isTracking={isTracking} enableOrbitControls={true} />
+          </div>
+
+          {/* Floating Technical Metadata (UI Decorations from Stitch) */}
+          <div className="absolute top-1/4 -right-12 bg-surface-container-high/60 backdrop-blur-md p-4 rounded-xl border border-white/5 flex flex-col gap-1 shadow-2xl pointer-events-none z-20">
+            <span className="text-[0.5rem] text-primary tracking-widest uppercase">System</span>
+            <span className="text-xs font-mono font-bold text-on-surface">Interactive Interface</span>
+          </div>
+          <div className="absolute bottom-1/4 -left-12 bg-surface-container-high/60 backdrop-blur-md p-4 rounded-xl border border-white/5 flex flex-col gap-1 shadow-2xl pointer-events-none z-20">
+            <span className="text-[0.5rem] text-primary tracking-widest uppercase">Stack</span>
+            <span className="text-xs font-mono font-bold text-on-surface">React • MERN • LLMs</span>
           </div>
         </div>
       </div>
@@ -146,8 +121,8 @@ export function HeroSection({ rotation, blendshapes, isTracking }: HeroSectionPr
         animate={{ opacity: 0.5 }}
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2
-          flex flex-col items-center gap-2 text-[#475569] hover:text-[#818CF8]
-          transition-colors duration-300 cursor-pointer"
+          flex flex-col items-center gap-2 text-on-surface-variant hover:text-primary
+          transition-colors duration-300 cursor-pointer z-50"
       >
         <span className="text-xs font-medium tracking-wider uppercase">Scroll</span>
         <FaChevronDown className="w-4 h-4 animate-bounce" />

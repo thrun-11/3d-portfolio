@@ -24,65 +24,63 @@ export function AboutSection() {
     <section
       id="about"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-32 relative"
-      style={{ background: 'linear-gradient(180deg, #06060b 0%, #0a0a14 100%)' }}
+      className="pt-24 pb-32 md:pt-32 md:pb-48 relative"
+      style={{ backgroundColor: '#0e0e0e' }}
     >
-      {/* Subtle divider glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px] bg-gradient-to-r from-transparent via-[#818CF8]/30 to-transparent" />
-
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-32">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 flex flex-col items-start text-left"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-[Space_Grotesk]">
-            About <span className="gradient-text">Me</span>
+          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary font-medium opacity-80 mb-4">
+            BACKGROUND
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-[-0.04em] leading-[0.95]">
+            About <span className="text-on-surface-variant">Me.</span>
           </h2>
-          <p className="text-[#64748B] max-w-xl mx-auto">
-            Combining creativity with technical expertise to build innovative solutions
-          </p>
         </motion.div>
 
         {/* Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
-          {/* Left: Bio */}
+        <div className="grid lg:grid-cols-12 gap-16 items-start mb-24">
+          {/* Left: Bio & Highlights */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-6"
+            className="lg:col-span-7 space-y-10"
           >
-            <p className="text-[#94A3B8] leading-relaxed text-lg">
+            <p className="text-on-surface-variant leading-relaxed text-xl font-light">
               {personalInfo.bio}
             </p>
 
-            <div className="space-y-3">
-              {highlights.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isVisible ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  className="flex items-center gap-3"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#818CF8] shrink-0" />
-                  <p className="text-[#94A3B8]">
-                    <span className="font-semibold text-white">{item.label}</span>{' '}
-                    {item.detail}
-                  </p>
-                </motion.div>
-              ))}
+            <div className="space-y-6 pt-4">
+              <div className="bg-surface-container-low border border-white/[0.05] rounded-3xl p-8">
+                {highlights.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    className={`flex items-start gap-6 ${i !== highlights.length - 1 ? 'border-b border-white/[0.05] pb-6 mb-6' : ''}`}
+                  >
+                    <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary mt-1 w-24 shrink-0 font-bold">
+                      {item.label}
+                    </span>
+                    <p className="text-on-surface text-lg font-light leading-relaxed">
+                      {item.detail}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-8">
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium
-                  hover:scale-105 transition-all duration-300 glow-blue"
-                style={{ background: 'linear-gradient(135deg, #818CF8, #6366F1)' }}
+                className="inline-flex items-center justify-center px-10 py-5 bg-surface-container-high border border-white/5 text-on-surface rounded-full font-bold text-sm tracking-widest uppercase transition-all hover:bg-surface-bright active:scale-95"
               >
                 Let's Work Together
               </a>
@@ -94,21 +92,21 @@ export function AboutSection() {
             initial={{ opacity: 0, x: 30 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-2 gap-3"
+            className="lg:col-span-5 grid grid-cols-2 gap-4"
           >
-            <div className="col-span-2 p-6 rounded-2xl glass hover:bg-white/[0.05] transition-all duration-300">
-              <div className="text-sm text-[#818CF8] font-medium mb-2 font-[Space_Grotesk]">Currently</div>
-              <div className="text-white font-semibold text-lg">Building AI-powered products</div>
-              <div className="text-[#64748B] text-sm mt-1">Full-stack development with focus on ML integration</div>
+            <div className="col-span-2 p-8 rounded-3xl bg-surface-container-low border border-white/[0.05] hover:bg-surface-container transition-all duration-500">
+              <div className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary mb-4">Currently</div>
+              <div className="text-on-surface font-light text-2xl tracking-tight leading-tight">Building AI-powered products</div>
+              <div className="text-on-surface-variant font-light mt-3">Full-stack development with a focus on machine learning integration.</div>
             </div>
-            <div className="p-5 rounded-2xl glass hover:bg-white/[0.05] transition-all duration-300">
-              <div className="text-sm text-[#22D3EE] font-medium mb-2 font-[Space_Grotesk]">Location</div>
-              <div className="text-white font-medium">{personalInfo.location}</div>
+            <div className="p-8 rounded-3xl bg-surface-container-low border border-white/[0.05] hover:bg-surface-container transition-all duration-500">
+              <div className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary mb-4">Location</div>
+              <div className="text-on-surface font-light text-xl">{personalInfo.location}</div>
             </div>
-            <div className="p-5 rounded-2xl glass hover:bg-white/[0.05] transition-all duration-300">
-              <div className="text-sm text-[#A78BFA] font-medium mb-2 font-[Space_Grotesk]">Education</div>
-              <div className="text-white font-medium">CS Student</div>
-              <div className="text-[#64748B] text-xs mt-1">Class of 2026</div>
+            <div className="p-8 rounded-3xl bg-surface-container-low border border-white/[0.05] hover:bg-surface-container transition-all duration-500">
+              <div className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary mb-4">Education</div>
+              <div className="text-on-surface font-light text-xl mb-1">CS Student</div>
+              <div className="text-on-surface-variant text-sm">Class of 2026</div>
             </div>
           </motion.div>
         </div>
@@ -123,20 +121,21 @@ export function AboutSection() {
           {statsData.map((stat, index) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={isVisible ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-              className="glass rounded-2xl p-6 text-center hover:bg-white/[0.05] transition-all duration-300 group"
+              className="bg-surface-container-low border border-white/[0.05] rounded-3xl p-8 hover:bg-surface-container transition-all duration-500 group flex flex-col justify-between min-h-[200px]"
             >
-              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center mx-auto mb-3 
-                group-hover:scale-110 transition-transform duration-300`}>
-                <stat.icon className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-full border border-white/[0.05] flex items-center justify-center bg-surface-container mb-8 group-hover:scale-110 transition-transform duration-500">
+                <stat.icon className="w-5 h-5 text-primary" />
               </div>
-              <div className="text-3xl font-bold text-white mb-1 font-[Space_Grotesk]">
-                {stat.value}
-              </div>
-              <div className="text-sm text-[#64748B]">
-                {stat.label}
+              <div className="border-t border-white/[0.1] pt-6 mt-4 w-full">
+                <div className="text-4xl md:text-5xl font-bold text-on-surface tracking-tighter mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-sm font-light text-on-surface-variant">
+                  {stat.label}
+                </div>
               </div>
             </motion.div>
           ))}

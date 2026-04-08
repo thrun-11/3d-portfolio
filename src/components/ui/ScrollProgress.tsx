@@ -21,10 +21,10 @@ export function ScrollProgress() {
       animate={{ opacity: scrollProgress > 0 ? 1 : 0 }}
     >
       <motion.div
-        className="h-full bg-gradient-to-r from-[#818CF8] via-[#22D3EE] to-[#A78BFA]"
+        className="h-full bg-on-surface"
         style={{
           width: `${scrollProgress}%`,
-          boxShadow: '0 0 12px rgba(129, 140, 248, 0.5), 0 0 24px rgba(34, 211, 238, 0.3)'
+          boxShadow: '0 0 10px rgba(255, 255, 255, 0.2)'
         }}
         transition={{ duration: 0.1 }}
       />

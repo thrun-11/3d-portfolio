@@ -3,11 +3,11 @@ import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { skills } from '../../utils/portfolioData';
 
 const skillCategories = [
-  { key: 'languages', title: 'Languages', color: '#818CF8' },
-  { key: 'frontend', title: 'Frontend', color: '#22D3EE' },
-  { key: 'backend', title: 'Backend', color: '#34D399' },
-  { key: 'tools', title: 'Tools & Platforms', color: '#F472B6' },
-  { key: 'ai', title: 'AI & ML', color: '#A78BFA' }
+  { key: 'languages', title: 'Languages' },
+  { key: 'frontend', title: 'Frontend' },
+  { key: 'backend', title: 'Backend' },
+  { key: 'tools', title: 'Tools & Platforms' },
+  { key: 'ai', title: 'AI & ML' }
 ];
 
 export function SkillsSection() {
@@ -17,82 +17,60 @@ export function SkillsSection() {
     <section
       id="skills"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-32 relative"
-      style={{ background: 'linear-gradient(180deg, #0a0a14 0%, #06060b 100%)' }}
+      className="py-24 md:py-32 relative"
+      style={{ backgroundColor: '#0e0e0e' }}
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-32">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 flex flex-col items-start text-left"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-[Space_Grotesk]">
-            Skills & <span className="gradient-text">Technologies</span>
+          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary font-medium opacity-80 mb-4">
+            CAPABILITIES
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-[-0.04em] leading-[0.95]">
+            Technical <span className="text-on-surface-variant">Arsenal.</span>
           </h2>
-          <p className="text-[#64748B] max-w-2xl mx-auto">
-            A comprehensive toolkit built through hands-on experience and continuous learning
-          </p>
         </motion.div>
 
-        {/* Skills Cloud */}
-        <div className="space-y-8">
+        {/* Editorial Glossary Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.key}
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+              className={`flex flex-col ${categoryIndex % 3 !== 0 ? 'lg:border-l lg:border-white/[0.05] lg:pl-12' : ''}`}
             >
               {/* Category label */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-2 h-2 rounded-full" style={{ background: category.color }} />
-                <h3 className="text-sm font-semibold uppercase tracking-wider font-[Space_Grotesk]"
-                  style={{ color: category.color }}>
+              <div className="border-b border-white/[0.05] pb-4 mb-6">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-on-surface">
                   {category.title}
                 </h3>
-                <div className="flex-1 h-[1px]" style={{ background: `linear-gradient(90deg, ${category.color}20, transparent)` }} />
               </div>
 
-              {/* Skill chips */}
-              <div className="flex flex-wrap gap-2">
+              {/* Typographic List */}
+              <ul className="flex flex-col gap-3">
                 {skills[category.key as keyof typeof skills].map((skill: any, skillIndex: number) => {
-                  // Scale chip sizes by proficiency
-                  const level = skill.level || 80;
-                  const isHigh = level >= 90;
-                  const isMid = level >= 80 && level < 90;
-
                   return (
-                    <motion.div
+                    <motion.li
                       key={skill.name}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isVisible ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ duration: 0.3, delay: categoryIndex * 0.1 + skillIndex * 0.03 }}
-                      className={`
-                        px-4 py-2 rounded-xl font-medium cursor-default
-                        transition-all duration-300 hover:scale-105
-                        ${isHigh ? 'text-sm' : isMid ? 'text-sm' : 'text-xs'}
-                      `}
-                      style={{
-                        background: `${category.color}${isHigh ? '15' : '08'}`,
-                        color: isHigh ? category.color : `${category.color}B0`,
-                        border: `1px solid ${category.color}${isHigh ? '30' : '15'}`,
-                        boxShadow: isHigh ? `0 0 16px ${category.color}10` : 'none'
-                      }}
-                      whileHover={{
-                        boxShadow: `0 0 20px ${category.color}25`,
-                        borderColor: `${category.color}50`
-                      }}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                      transition={{ duration: 0.3, delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
+                      className="flex items-center justify-between group"
                     >
-                      {skill.name}
-                      {isHigh && (
-                        <span className="ml-2 opacity-50 text-xs">{level}%</span>
-                      )}
-                    </motion.div>
+                      <span className="text-on-surface-variant font-light group-hover:text-on-surface transition-colors duration-300">
+                        {skill.name}
+                      </span>
+                    </motion.li>
                   );
                 })}
-              </div>
+              </ul>
             </motion.div>
           ))}
         </div>
@@ -102,10 +80,11 @@ export function SkillsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-12 text-center"
+          className="mt-24 pt-12 border-t border-white/[0.02]"
         >
-          <p className="text-[#475569] text-sm">
-            Always learning and exploring new technologies to stay at the forefront of development
+          <p className="text-on-surface-variant text-sm font-light uppercase tracking-widest flex items-center gap-4">
+            <span className="w-12 h-[1px] bg-primary/30 block"></span>
+            Always exploring emerging paradigms
           </p>
         </motion.div>
       </div>

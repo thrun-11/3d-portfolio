@@ -41,7 +41,6 @@ export function calculateHeadRotation(landmarks: FaceLandmark[]): RotationAngles
 
   // Get key points
   const noseTip = landmarks[LANDMARK_INDICES.NOSE_TIP];
-  const noseBridge = landmarks[LANDMARK_INDICES.NOSE_BRIDGE];
   const leftEye = landmarks[LANDMARK_INDICES.LEFT_EYE];
   const rightEye = landmarks[LANDMARK_INDICES.RIGHT_EYE];
   const chin = landmarks[LANDMARK_INDICES.CHIN];
@@ -53,16 +52,22 @@ export function calculateHeadRotation(landmarks: FaceLandmark[]): RotationAngles
   const yaw = -(noseOffset / faceWidth) * Math.PI * 0.8; // Set to negative to mirror user's head correctly
 
   // Calculate pitch (up-down rotation)
+  // We use the depth (Z) difference between forehead and chin vs their vertical (Y) distance
   const faceHeight = Math.abs(forehead.y - chin.y);
-  const noseVerticalOffset = noseTip.y - noseBridge.y;
-  const pitch = (noseVerticalOffset / faceHeight) * Math.PI * 0.6;
+  const faceDepth = forehead.z - chin.z;
+  
+  // CALIBRATION: Adjust this value to set the "neutral" resting head tilt
+  // Increase (e.g. + 0.3) to make the avatar look further down, Decrease (e.g. - 0.3) to tilt backwards.
+  const CALIBRATION_PITCH_OFFSET = 0; 
+  
+  const pitch = -Math.atan2(faceDepth, faceHeight) * 1.5 + CALIBRATION_PITCH_OFFSET;
 
   // Calculate roll (tilt rotation)
   const eyeAngle = Math.atan2(
     rightEye.y - leftEye.y,
     rightEye.x - leftEye.x
   );
-  const roll = eyeAngle;
+  const roll = eyeAngle; // Original mapping for mirroring
 
   return {
     pitch: clamp(pitch, -Math.PI / 4, Math.PI / 4),

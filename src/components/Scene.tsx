@@ -116,8 +116,8 @@ export function Scene({ rotation, blendshapes, isTracking, enableOrbitControls =
   return (
     <Canvas
       camera={{
-        position: [0, 0.4, 3.8],
-        fov: 35,
+        position: [-0.65, 0.4, 4.4],
+        fov: 38,
         near: 0.1,
         far: 1000
       }}

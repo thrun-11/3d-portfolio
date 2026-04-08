@@ -11,10 +11,7 @@ interface Avatar3DProps {
   isTracking: boolean;
 }
 
-// Body part detection — map mesh/bone names to regions
-const HEAD_PARTS = ['Head', 'Neck', 'Head_Mesh', 'EyeLeft', 'EyeRight', 'Wolf3D_Head', 'Wolf3D_Teeth', 'Wolf3D_Hair'];
-const ARM_PARTS = ['RightArm', 'RightForeArm', 'RightHand', 'LeftArm', 'LeftForeArm', 'LeftHand', 'Wolf3D_Hands'];
-// Everything else = body/torso
+
 
 type ReactionType = 'surprise' | 'flinch' | 'wave' | null;
 
@@ -169,13 +166,7 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
     });
   }
 
-  // Determine which body part was clicked
-  function getClickRegion(intersectedName: string): ReactionType {
-    // Walk up the parent chain of the intersected object name
-    if (HEAD_PARTS.some(p => intersectedName.includes(p))) return 'surprise';
-    if (ARM_PARTS.some(p => intersectedName.includes(p))) return 'wave';
-    return 'flinch'; // default: body/torso
-  }
+
 
   // Handle click on avatar
   const handleClick = useCallback((event: ThreeEvent<MouseEvent>) => {
@@ -225,7 +216,7 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
         );
         rightArmRef.current.rotation.z = THREE.MathUtils.lerp(
           rightArmRef.current.rotation.z,
-          -0.5,
+          -0.2,
           armRaise
         );
         rightArmRef.current.rotation.y = THREE.MathUtils.lerp(
@@ -351,7 +342,7 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
 
               // Perfect wave math
               rightArmRef.current.rotation.x = THREE.MathUtils.lerp(rightArmRef.current.rotation.x, 0.6, blendWeight);
-              rightArmRef.current.rotation.z = THREE.MathUtils.lerp(rightArmRef.current.rotation.z, -0.5, blendWeight);
+              rightArmRef.current.rotation.z = THREE.MathUtils.lerp(rightArmRef.current.rotation.z, -0.2, blendWeight);
               rightArmRef.current.rotation.y = THREE.MathUtils.lerp(rightArmRef.current.rotation.y, 0, blendWeight);
 
               if (rightForeArmRef.current) {
@@ -387,7 +378,7 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
     if (isTracking) {
       // Apply head rotation from tracking
       if (headRef.current && boneRestRotations.current['Head']) {
-        const targetEuler = toEuler({ ...rotation, pitch: rotation.pitch - 0.2 });
+        const targetEuler = toEuler({ ...rotation });
         const targetX = boneRestRotations.current['Head'].x + targetEuler.x;
         const targetY = boneRestRotations.current['Head'].y + targetEuler.y;
         const targetZ = boneRestRotations.current['Head'].z + targetEuler.z;
@@ -397,7 +388,7 @@ export function Avatar3D({ rotation, blendshapes, isTracking }: Avatar3DProps) {
         headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, targetZ, 0.4);
       }
       if (neckRef.current && boneRestRotations.current['Neck']) {
-        const targetEuler = toEuler({ ...rotation, pitch: rotation.pitch - 0.2 });
+        const targetEuler = toEuler({ ...rotation });
         const targetX = boneRestRotations.current['Neck'].x + targetEuler.x * 0.4;
         const targetY = boneRestRotations.current['Neck'].y + targetEuler.y * 0.4;
         const targetZ = boneRestRotations.current['Neck'].z + targetEuler.z * 0.3;

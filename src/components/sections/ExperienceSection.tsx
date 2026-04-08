@@ -1,13 +1,6 @@
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { experience } from '../../utils/portfolioData';
-import { FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
-
-const companyColors: Record<string, string> = {
-  'Meta': '#818CF8',
-  'Convo AI': '#22D3EE',
-  'Freelance': '#A78BFA'
-};
 
 export function ExperienceSection() {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
@@ -16,114 +9,85 @@ export function ExperienceSection() {
     <section
       id="experience"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-32 relative"
-      style={{ background: 'linear-gradient(180deg, #0a0a14 0%, #06060b 100%)' }}
+      className="py-24 md:py-32 relative"
+      style={{ backgroundColor: '#0e0e0e' }}
     >
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-32">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-16 flex flex-col items-start text-left"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-[Space_Grotesk]">
-            <span className="gradient-text">Experience</span>
+          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary font-medium opacity-80 mb-4">
+            HISTORY
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-[-0.04em] leading-[0.95]">
+            <span className="text-on-surface-variant">Professional</span> Experience.
           </h2>
-          <p className="text-[#64748B] max-w-xl mx-auto">
-            Where I've honed my craft and made an impact
-          </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical gradient line */}
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-[1px]"
-            style={{ background: 'linear-gradient(180deg, #818CF8 0%, #818CF8/50 50%, transparent 100%)' }} />
+        {/* Timeline translated into Editorial Blocks */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-10 space-y-16">
+            {experience.map((exp, index) => (
+              <motion.div
+                key={exp.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                className="group relative grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 lg:gap-24 items-start"
+              >
+                {/* Left side: Meta (Dates/Location) */}
+                <div className="md:col-span-4 flex flex-col gap-2 pt-1 border-t border-white/[0.05] md:border-none md:pt-0">
+                  <div className="text-[0.6875rem] font-bold tracking-widest uppercase text-on-surface-variant">
+                    {exp.period}
+                  </div>
+                  <div className="text-sm font-light text-on-surface-variant/70 flex items-center gap-1.5">
+                    {exp.location}
+                  </div>
+                </div>
 
-          <div className="space-y-8">
-            {experience.map((exp, index) => {
-              const color = companyColors[exp.company] || '#818CF8';
-
-              return (
-                <motion.div
-                  key={exp.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="relative pl-16 md:pl-20"
-                >
-                  {/* Timeline dot */}
-                  <div
-                    className="absolute left-4 md:left-6 top-6 w-4 h-4 rounded-full border-[3px] border-[#06060b]"
-                    style={{
-                      background: color,
-                      boxShadow: `0 0 12px ${color}50`
-                    }}
-                  />
-
-                  {/* Card */}
-                  <div
-                    className="glass rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300"
-                    style={{ borderLeft: `2px solid ${color}30` }}
-                  >
-                    {/* Header */}
-                    <div className="mb-4">
-                      <div className="flex items-start justify-between mb-1">
-                        <h3 className="text-lg font-bold text-white font-[Space_Grotesk]">
-                          {exp.role}
-                        </h3>
-                      </div>
-                      <div className="text-base font-semibold mb-2" style={{ color }}>
-                        {exp.company}
-                      </div>
-                      <div className="flex flex-wrap gap-4 text-sm text-[#64748B]">
-                        <div className="flex items-center gap-1.5">
-                          <FaCalendarAlt className="w-3.5 h-3.5" />
-                          {exp.period}
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <FaMapMarkerAlt className="w-3.5 h-3.5" />
-                          {exp.location}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-[#94A3B8] mb-4 text-sm leading-relaxed">
-                      {exp.description}
-                    </p>
-
-                    {/* Achievements */}
-                    <ul className="space-y-2 mb-4">
-                      {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-[#94A3B8]">
-                          <span style={{ color }} className="mt-0.5 font-bold">›</span>
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2">
-                      {exp.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 rounded-md text-xs font-medium"
-                          style={{
-                            background: `${color}10`,
-                            color: color,
-                            border: `1px solid ${color}20`
-                          }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                {/* Right side: Content */}
+                <div className="md:col-span-8 flex flex-col gap-6">
+                  <div>
+                    <h3 className="text-3xl md:text-4xl font-bold text-on-surface tracking-tight mb-2 group-hover:text-primary transition-colors duration-300">
+                      {exp.role}
+                    </h3>
+                    <div className="text-xl font-light text-on-surface-variant uppercase tracking-widest text-[0.85rem]">
+                      {exp.company}
                     </div>
                   </div>
-                </motion.div>
-              );
-            })}
+
+                  <p className="text-on-surface-variant leading-relaxed font-light text-lg">
+                    {exp.description}
+                  </p>
+
+                  <ul className="space-y-6 pt-2">
+                    {exp.achievements.map((achievement, i) => (
+                      <li key={i} className="flex items-start gap-8 text-on-surface-variant font-light">
+                        <span className="text-primary mt-1 text-[0.6rem] uppercase tracking-widest opacity-80 shrink-0">0{i+1}</span>
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Minimalist Tech Stack */}
+                  <div className="flex flex-wrap gap-3 pt-6 border-t border-white/[0.02]">
+                    <span className="text-[0.6rem] uppercase tracking-[0.2em] text-primary w-full md:w-auto md:py-2 opacity-50 shrink-0">STACK</span>
+                    {exp.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-4 py-2 bg-surface-container-low border border-white/[0.02] rounded-full text-xs font-light text-on-surface-variant tracking-wider transition-all duration-300 hover:bg-surface-container-high hover:text-on-surface"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>

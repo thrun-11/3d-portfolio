@@ -140,7 +140,13 @@ export function useFaceTracking() {
           for (const cat of categories) {
             // Skip the "_neutral" category
             if (cat.categoryName !== '_neutral') {
-              newBlendshapes[cat.categoryName] = cat.score;
+              let mirrorName = cat.categoryName;
+              if (mirrorName.includes('Left')) {
+                mirrorName = mirrorName.replace('Left', 'Right');
+              } else if (mirrorName.includes('Right')) {
+                mirrorName = mirrorName.replace('Right', 'Left');
+              }
+              newBlendshapes[mirrorName] = cat.score;
             }
           }
         }

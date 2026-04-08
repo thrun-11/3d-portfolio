@@ -74,9 +74,8 @@ export const projects = [
       github: null 
     },
     stats: {
-      users: "10+ businesses",
-      uptime: "99.9%",
-      rating: "N/A"
+      businesses: "10+",
+      uptime: "99.9%"
     }
   },
   {
@@ -96,9 +95,8 @@ export const projects = [
       github: null
     },
     stats: {
-      messages: "-70% manual load",
-      responseTime: "N/A",
-      accuracy: "N/A"
+      reducedLoad: "70%",
+      resolution: "95%"
     }
   },
   {
@@ -116,7 +114,10 @@ export const projects = [
       demo: null,
       github: null
     },
-    stats: {}
+    stats: {
+      commits: "27+",
+      integrated: "Yes"
+    }
   },
   {
     id: 4,
