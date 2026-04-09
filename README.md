@@ -34,7 +34,7 @@ An interactive portfolio website featuring real-time face tracking that controls
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/arnavnidumolu/3d-portfolio.git
+   git clone https://github.com/thrun-11/3d-portfolio.git
    cd 3d-portfolio
    ```
 
@@ -189,10 +189,10 @@ MIT License - feel free to use this template for your own portfolio!
 
 ## 👤 Author
 
-**Arnav Nidumolu**
-- Email: arnavnidumolu@gmail.com
-- LinkedIn: [linkedin.com/in/arnav-nidumolu](https://linkedin.com/in/arnav-nidumolu)
-- GitHub: [github.com/arnavnidumolu](https://github.com/arnavnidumolu)
+**Tharun SMu**
+- Email: tharun.v4ch@gmail.com
+- LinkedIn: [linkedin.com/in/tharun2896](https://linkedin.com/in/tharun2896)
+- GitHub: [github.com/thrun-11](https://github.com/thrun-11)
 
 ## 🙏 Acknowledgments
 
