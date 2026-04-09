@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
+@source "./**/*.{js,ts,jsx,tsx}";
 
 @theme {
   /* Monochrome Gallery Design System — "The Monolithic Gallery" */
@@ -36,88 +37,87 @@
   --color-error: #ffb4ab;
 }
 
-:root {
-  font-family: 'Inter', system-ui, sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
-  color-scheme: dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background-color: #131313;
-  color: #e5e2e1;
-}
-
-#root {
-  min-height: 100vh;
-  width: 100%;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-/* Offset scroll anchors for fixed navbar */
-section[id] {
-  scroll-margin-top: 80px;
-}
-
-/* ── Chrome Glass Utility ─────────────────────── */
-.chrome-glass {
-  background: rgba(53, 53, 52, 0.6);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-}
-
-/* ── Architectural Lead-in ────────────────────── */
-.architectural-leadin {
-  position: relative;
-}
-.architectural-leadin::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1px;
-  height: 120px;
-  background-color: #ffffff;
-}
-
-/* ── Scrollbar ────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #131313;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #474747;
-  border-radius: 0;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #919191;
-}
-
-/* ── Reduced Motion ───────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+@layer base {
+  :root {
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    font-weight: 400;
+    color-scheme: dark;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  html { scroll-behavior: auto; }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background-color: #131313;
+    color: #e5e2e1;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #131313;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #474747;
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #919191;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+}
+
+@layer utilities {
+  .chrome-glass {
+    background: rgba(53, 53, 52, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .architectural-leadin {
+    position: relative;
+  }
+  .architectural-leadin::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 120px;
+    background-color: #ffffff;
+  }
 }

@@ -30,7 +30,7 @@ export function ExperienceSection() {
 
         {/* Timeline — Editorial Blocks */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-10 space-y-16">
+          <div className="lg:col-span-10 space-y-20">
             {experience.map((exp, index) => (
               <motion.div
                 key={exp.id}
@@ -40,7 +40,7 @@ export function ExperienceSection() {
                 className="group relative grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 lg:gap-24 items-start"
               >
                 {/* Left side: Meta (Dates/Location) */}
-                <div className="md:col-span-4 flex flex-col gap-2 pt-8 md:pt-0" style={{ borderTop: '1px solid rgba(71,71,71,0.15)' }}>
+                <div className="md:col-span-4 flex flex-col gap-2 pt-12 md:pt-4" style={{ borderTop: '1px solid rgba(71,71,71,0.15)' }}>
                   <div className="text-[0.6875rem] font-bold tracking-widest uppercase text-on-surface-variant">
                     {exp.period}
                   </div>
@@ -50,7 +50,7 @@ export function ExperienceSection() {
                 </div>
 
                 {/* Right side: Content */}
-                <div className="md:col-span-8 flex flex-col gap-6">
+                <div className="md:col-span-8 flex flex-col gap-4">
                   <div>
                     <h3 className="text-3xl md:text-4xl font-bold text-on-surface tracking-tight mb-2 group-hover:text-on-surface-variant transition-colors duration-300">
                       {exp.role}
@@ -65,7 +65,7 @@ export function ExperienceSection() {
                   </p>
 
                   {/* Numbered Achievements */}
-                  <ul className="space-y-6 pt-2">
+                  <ul className="space-y-4 pt-2">
                     {exp.achievements.map((achievement, i) => (
                       <li key={i} className="flex items-start gap-8 text-on-surface-variant font-light">
                         <span className="text-on-surface-variant mt-1 text-[0.6rem] uppercase tracking-widest opacity-80 shrink-0">0{i+1}</span>
@@ -77,6 +77,7 @@ export function ExperienceSection() {
                   {/* Tech Stack — tonal pills, sharp */}
                   <div className="flex flex-wrap gap-3 pt-6" style={{ borderTop: '1px solid rgba(71,71,71,0.1)' }}>
                     <span className="text-[0.6rem] uppercase tracking-[0.2em] text-on-surface-variant w-full md:w-auto py-2 opacity-50 shrink-0">STACK</span>
+                    <div className="flex flex-wrap gap-2">
                     {exp.tech.map((tech) => (
                       <span
                         key={tech}
@@ -85,6 +86,7 @@ export function ExperienceSection() {
                         {tech}
                       </span>
                     ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>

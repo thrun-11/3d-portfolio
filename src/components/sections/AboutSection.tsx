@@ -2,13 +2,6 @@ import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { personalInfo, stats } from '../../utils/portfolioData';
 
-const highlights = [
-  { label: 'Founded', detail: 'Convo AI, serving 1000+ users' },
-  { label: 'Interned', detail: "at Meta's Llama Team" },
-  { label: 'Created', detail: 'AR filters with 100K+ impressions' },
-  { label: 'Built', detail: 'automation systems handling 5000+ daily messages' }
-];
-
 export function AboutSection() {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
@@ -17,101 +10,81 @@ export function AboutSection() {
       id="about"
       ref={ref as React.RefObject<HTMLElement>}
       className="relative"
-      style={{ paddingTop: '50px', paddingBottom: '160px', backgroundColor: '#131313' }}
+      style={{ paddingTop: '64px', paddingBottom: '50px', backgroundColor: '#131313' }}
     >
       <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }}>
-        {/* Section Header — Architectural Lead-in */}
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-16 flex flex-col items-start text-left"
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left', marginBottom: '64px' }}
         >
-          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium opacity-80 mb-4">
+          <span style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#c6c6c6', fontWeight: 500, opacity: 0.8, marginBottom: '16px' }}>
             BACKGROUND
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-[-0.04em] leading-[0.95]">
-            About <span className="text-on-surface-variant">Me.</span>
+          <h2 style={{ fontSize: 'clamp(2.25rem, 5vw, 3.75rem)', fontWeight: 700, color: '#e5e2e1', letterSpacing: '-0.04em', lineHeight: 0.95 }}>
+            About <span style={{ color: '#c6c6c6' }}>Me.</span>
           </h2>
         </motion.div>
 
         {/* Content Grid */}
-        <div className="grid lg:grid-cols-12 gap-16 items-start mb-24">
-          {/* Left: Bio & Highlights */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isVisible ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-7 space-y-10"
-          >
-            <p className="text-on-surface-variant leading-relaxed text-xl font-light">
-              {personalInfo.bio}
-            </p>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '64px', alignItems: 'start', marginBottom: '96px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '48px', alignItems: 'start' }}>
+            {/* Left: Bio & CTA */}
+            <motion.div
+              style={{ gridColumn: 'span 7' }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={isVisible ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <p style={{ color: '#c6c6c6', lineHeight: 1.75, fontSize: '1.25rem', fontWeight: 300, marginBottom: '32px' }}>
+                {personalInfo.bio}
+              </p>
 
-            {/* Highlights — tonal block, no border */}
-            <div className="space-y-6 pt-4">
-              <div className="bg-[#1c1b1b] p-8">
-                {highlights.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isVisible ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    className={`flex items-start gap-6 ${i !== highlights.length - 1 ? 'pb-6 mb-6' : ''}`}
-                    style={i !== highlights.length - 1 ? { borderBottom: '1px solid rgba(71,71,71,0.15)' } : {}}
-                  >
-                    <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface mt-1 w-24 shrink-0 font-bold">
-                      {item.label}
-                    </span>
-                    <p className="text-on-surface text-lg font-light leading-relaxed">
-                      {item.detail}
-                    </p>
-                  </motion.div>
-                ))}
+              {/* CTA */}
+              <div>
+                <a
+                  href={`mailto:${personalInfo.email}`}
+                  className="inline-flex items-center justify-center"
+                  style={{ padding: '20px 40px', backgroundColor: '#2a2a2a', color: '#e5e2e1', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase', transition: 'all 0.3s' }}
+                >
+                  Let&apos;s Work Together
+                </a>
               </div>
-            </div>
+            </motion.div>
 
-            {/* CTA — sharp corners */}
-            <div className="pt-8">
-              <a
-                href={`mailto:${personalInfo.email}`}
-                className="inline-flex items-center justify-center px-10 py-5 bg-[#2a2a2a] text-on-surface font-bold text-sm tracking-widest uppercase transition-all hover:bg-[#353534] active:scale-95"
-              >
-                Let's Work Together
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Right: Bento Grid — tonal tiles, sharp */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isVisible ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="lg:col-span-5 grid grid-cols-2 gap-4"
-          >
-            <div className="col-span-2 p-8 bg-[#1c1b1b] hover:bg-[#201f1f] transition-all duration-500">
-              <div className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant mb-4">Currently</div>
-              <div className="text-on-surface font-light text-2xl tracking-tight leading-tight">Building AI-powered products</div>
-              <div className="text-on-surface-variant font-light mt-3">Full-stack development with a focus on machine learning integration.</div>
-            </div>
-            <div className="p-8 bg-[#1c1b1b] hover:bg-[#201f1f] transition-all duration-500">
-              <div className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant mb-4">Location</div>
-              <div className="text-on-surface font-light text-xl">{personalInfo.location}</div>
-            </div>
-            <div className="p-8 bg-[#1c1b1b] hover:bg-[#201f1f] transition-all duration-500">
-              <div className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant mb-4">Education</div>
-              <div className="text-on-surface font-light text-xl mb-1">CS Student</div>
-              <div className="text-on-surface-variant text-sm">Class of 2026</div>
-            </div>
-          </motion.div>
+            {/* Right: Bento Grid */}
+            <motion.div
+              style={{ gridColumn: 'span 5', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}
+              initial={{ opacity: 0, x: 30 }}
+              animate={isVisible ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <div style={{ gridColumn: 'span 2', padding: '24px', backgroundColor: '#1c1b1b' }}>
+                <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#c6c6c6', marginBottom: '12px' }}>Currently</div>
+                <div style={{ color: '#e5e2e1', fontWeight: 300, fontSize: '1.5rem', letterSpacing: '-0.02em', lineHeight: 1.25 }}>Building AI-powered products</div>
+                <div style={{ color: '#c6c6c6', fontWeight: 300, marginTop: '12px', fontSize: '0.875rem' }}>Full-stack development with a focus on machine learning integration.</div>
+              </div>
+              <div style={{ padding: '24px', backgroundColor: '#1c1b1b' }}>
+                <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#c6c6c6', marginBottom: '12px' }}>Location</div>
+                <div style={{ color: '#e5e2e1', fontWeight: 300, fontSize: '1.25rem' }}>{personalInfo.location}</div>
+              </div>
+              <div style={{ padding: '24px', backgroundColor: '#1c1b1b' }}>
+                <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#c6c6c6', marginBottom: '12px' }}>Education</div>
+                <div style={{ color: '#e5e2e1', fontWeight: 300, fontSize: '1.25rem', marginBottom: '4px' }}>CS Student</div>
+                <div style={{ color: '#c6c6c6', fontSize: '0.875rem' }}>Class of 2026</div>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Stats Grid — tonal blocks, sharp corners */}
+        {/* Stats Grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}
         >
           {[
             { label: 'Years Experience', value: stats.experience },
@@ -124,13 +97,13 @@ export function AboutSection() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={isVisible ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-              className="bg-[#1c1b1b] hover:bg-[#201f1f] transition-all duration-500 flex flex-col justify-between min-h-[200px] p-8"
+              style={{ backgroundColor: '#1c1b1b', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '140px' }}
             >
-              <div className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant opacity-70">
+              <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#c6c6c6', opacity: 0.7 }}>
                 {stat.label}
               </div>
-              <div className="border-t border-[#474747]/30 pt-6 mt-4 w-full">
-                <div className="text-4xl md:text-5xl font-bold text-on-surface tracking-tighter mb-2">
+              <div style={{ borderTop: '1px solid rgba(71,71,71,0.3)', paddingTop: '12px', marginTop: '8px', width: '100%' }}>
+                <div style={{ fontSize: 'clamp(2.25rem, 4vw, 3rem)', fontWeight: 700, color: '#e5e2e1', letterSpacing: '-0.05em', marginBottom: '8px' }}>
                   {stat.value}
                 </div>
               </div>

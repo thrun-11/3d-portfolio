@@ -41,7 +41,7 @@ export function ContactSection() {
       id="contact"
       ref={ref as React.RefObject<HTMLElement>}
       className="relative overflow-hidden"
-      style={{ paddingTop: '128px', paddingBottom: '192px', backgroundColor: '#0e0e0e' }}
+      style={{ paddingTop: '64px', paddingBottom: '128px', backgroundColor: '#0e0e0e' }}
     >
       <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }}>
         {/* Section Header */}

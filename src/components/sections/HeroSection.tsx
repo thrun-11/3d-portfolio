@@ -21,7 +21,7 @@ export function HeroSection({ rotation, blendshapes, isTracking }: HeroSectionPr
     <section
       id="hero"
       className="relative min-h-screen flex flex-col justify-center overflow-hidden"
-      style={{ paddingTop: '30px', paddingBottom: '64px', backgroundColor: '#0e0e0e' }}
+      style={{ paddingTop: '80px', paddingBottom: '20px', backgroundColor: '#0e0e0e' }}
     >
       {/* Architectural Void Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0e0e0e] via-[#131313] to-[#0e0e0e] pointer-events-none" />

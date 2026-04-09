@@ -18,7 +18,7 @@ export function SkillsSection() {
       id="skills"
       ref={ref as React.RefObject<HTMLElement>}
       className="relative"
-      style={{ paddingTop: '50px', paddingBottom: '200px', backgroundColor: '#0e0e0e' }}
+      style={{ paddingTop: '20px', paddingBottom: '128px', backgroundColor: '#0e0e0e' }}
     >
       <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }}>
         {/* Section Header */}
@@ -47,7 +47,7 @@ export function SkillsSection() {
               className={`flex flex-col ${categoryIndex % 3 !== 0 ? 'lg:border-l lg:border-[#474747]/20 lg:pl-12' : ''}`}
             >
               {/* Category label */}
-              <div className="pb-4 mb-6" style={{ borderBottom: '1px solid rgba(71,71,71,0.15)' }}>
+              <div className="pb-3 mb-4" style={{ borderBottom: '1px solid rgba(71,71,71,0.15)' }}>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-on-surface-variant">
                   {category.title}
                 </h3>

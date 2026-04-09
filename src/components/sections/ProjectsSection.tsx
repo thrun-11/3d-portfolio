@@ -11,7 +11,7 @@ export function ProjectsSection() {
       id="projects"
       ref={ref as React.RefObject<HTMLElement>}
       className="relative"
-      style={{ paddingTop: '50px', paddingBottom: '100px', backgroundColor: '#0e0e0e' }}
+      style={{ paddingTop: '5px', paddingBottom: '128px', backgroundColor: '#0e0e0e' }}
     >
       <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }}>
         {/* Section Header */}
@@ -78,7 +78,7 @@ export function ProjectsSection() {
 
                 {/* Content Block */}
                 <div className={`p-8 md:p-12 flex flex-col ${isFeatured ? 'md:w-7/12' : 'flex-1'}`}>
-                  <div className="mb-6">
+                  <div className="mb-8">
                     <h3 className="text-3xl font-bold text-on-surface mb-4 tracking-tight group-hover:text-on-surface-variant transition-colors duration-300">
                       {project.title}
                     </h3>
