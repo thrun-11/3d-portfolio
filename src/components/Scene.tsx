@@ -66,18 +66,17 @@ function LoadingFallback() {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '16px',
-        color: '#94A3B8',
+        color: '#c6c6c6',
         fontFamily: 'Inter, system-ui, sans-serif'
       }}>
         <div style={{
           width: '40px',
           height: '40px',
-          border: '2px solid rgba(255,255,255,0.1)',
-          borderTopColor: '#818CF8',
-          borderRadius: '50%',
+          border: '2px solid rgba(198,198,198,0.1)',
+          borderTopColor: '#e5e2e1',
           animation: 'spin 0.8s linear infinite'
         }} />
-        <span style={{ fontSize: '13px', fontWeight: 500, letterSpacing: '0.05em' }}>Loading...</span>
+        <span style={{ fontSize: '13px', fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Loading...</span>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     </Html>
@@ -117,7 +116,7 @@ export function Scene({ rotation, blendshapes, isTracking, enableOrbitControls =
     <Canvas
       camera={{
         position: [-0.65, 0.4, 4.4],
-        fov: 38,
+        fov: 44,
         near: 0.1,
         far: 1000
       }}

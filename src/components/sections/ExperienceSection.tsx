@@ -9,10 +9,10 @@ export function ExperienceSection() {
     <section
       id="experience"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-24 md:py-32 relative"
-      style={{ backgroundColor: '#0e0e0e' }}
+      className="relative"
+      style={{ paddingTop: '30px', paddingBottom: '128px', backgroundColor: '#131313' }}
     >
-      <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-32">
+      <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }}>
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -20,7 +20,7 @@ export function ExperienceSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 flex flex-col items-start text-left"
         >
-          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary font-medium opacity-80 mb-4">
+          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium opacity-80 mb-4">
             HISTORY
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-[-0.04em] leading-[0.95]">
@@ -28,7 +28,7 @@ export function ExperienceSection() {
           </h2>
         </motion.div>
 
-        {/* Timeline translated into Editorial Blocks */}
+        {/* Timeline — Editorial Blocks */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-10 space-y-16">
             {experience.map((exp, index) => (
@@ -40,7 +40,7 @@ export function ExperienceSection() {
                 className="group relative grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 lg:gap-24 items-start"
               >
                 {/* Left side: Meta (Dates/Location) */}
-                <div className="md:col-span-4 flex flex-col gap-2 pt-1 border-t border-white/[0.05] md:border-none md:pt-0">
+                <div className="md:col-span-4 flex flex-col gap-2 pt-8 md:pt-0" style={{ borderTop: '1px solid rgba(71,71,71,0.15)' }}>
                   <div className="text-[0.6875rem] font-bold tracking-widest uppercase text-on-surface-variant">
                     {exp.period}
                   </div>
@@ -52,7 +52,7 @@ export function ExperienceSection() {
                 {/* Right side: Content */}
                 <div className="md:col-span-8 flex flex-col gap-6">
                   <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-on-surface tracking-tight mb-2 group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-3xl md:text-4xl font-bold text-on-surface tracking-tight mb-2 group-hover:text-on-surface-variant transition-colors duration-300">
                       {exp.role}
                     </h3>
                     <div className="text-xl font-light text-on-surface-variant uppercase tracking-widest text-[0.85rem]">
@@ -64,22 +64,23 @@ export function ExperienceSection() {
                     {exp.description}
                   </p>
 
+                  {/* Numbered Achievements */}
                   <ul className="space-y-6 pt-2">
                     {exp.achievements.map((achievement, i) => (
                       <li key={i} className="flex items-start gap-8 text-on-surface-variant font-light">
-                        <span className="text-primary mt-1 text-[0.6rem] uppercase tracking-widest opacity-80 shrink-0">0{i+1}</span>
+                        <span className="text-on-surface-variant mt-1 text-[0.6rem] uppercase tracking-widest opacity-80 shrink-0">0{i+1}</span>
                         <span>{achievement}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* Minimalist Tech Stack */}
-                  <div className="flex flex-wrap gap-3 pt-6 border-t border-white/[0.02]">
-                    <span className="text-[0.6rem] uppercase tracking-[0.2em] text-primary w-full md:w-auto md:py-2 opacity-50 shrink-0">STACK</span>
+                  {/* Tech Stack — tonal pills, sharp */}
+                  <div className="flex flex-wrap gap-3 pt-6" style={{ borderTop: '1px solid rgba(71,71,71,0.1)' }}>
+                    <span className="text-[0.6rem] uppercase tracking-[0.2em] text-on-surface-variant w-full md:w-auto py-2 opacity-50 shrink-0">STACK</span>
                     {exp.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-4 py-2 bg-surface-container-low border border-white/[0.02] rounded-full text-xs font-light text-on-surface-variant tracking-wider transition-all duration-300 hover:bg-surface-container-high hover:text-on-surface"
+                        className="px-4 py-2 bg-[#1c1b1b] text-[0.6875rem] font-light text-on-surface-variant tracking-wider transition-all duration-300 hover:bg-[#2a2a2a] hover:text-on-surface"
                       >
                         {tech}
                       </span>

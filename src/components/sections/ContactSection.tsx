@@ -40,10 +40,10 @@ export function ContactSection() {
     <section
       id="contact"
       ref={ref as React.RefObject<HTMLElement>}
-      className="pt-24 pb-32 md:pt-32 md:pb-48 relative overflow-hidden"
-      style={{ backgroundColor: '#0e0e0e' }}
+      className="relative overflow-hidden"
+      style={{ paddingTop: '128px', paddingBottom: '192px', backgroundColor: '#0e0e0e' }}
     >
-      <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-32">
+      <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }}>
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -51,7 +51,7 @@ export function ContactSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 flex flex-col items-start text-left"
         >
-          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary font-medium opacity-80 mb-4">
+          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium opacity-80 mb-4">
             INITIATE
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-[-0.04em] leading-[0.95]">
@@ -73,7 +73,7 @@ export function ContactSection() {
               </p>
             </div>
 
-            {/* Contact Links */}
+            {/* Contact Links — tonal blocks, sharp */}
             <div className="space-y-4">
               {[
                 { icon: FaEnvelope, label: 'Email', value: personalInfo.email, href: `mailto:${personalInfo.email}` },
@@ -85,10 +85,10 @@ export function ContactSection() {
                   href={contact.href}
                   target={contact.href.startsWith('mailto') ? undefined : '_blank'}
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-6 bg-surface border border-white/[0.05] rounded-2xl hover:bg-surface-container-low transition-all duration-300 group"
+                  className="flex items-center justify-between p-6 bg-[#1c1b1b] hover:bg-[#201f1f] transition-all duration-300 group"
                 >
                   <div className="flex items-center gap-6">
-                    <contact.icon className="w-5 h-5 text-on-surface-variant group-hover:text-primary transition-colors duration-300" />
+                    <contact.icon className="w-5 h-5 text-on-surface-variant group-hover:text-on-surface transition-colors duration-300" />
                     <div>
                       <div className="text-[0.6875rem] uppercase tracking-widest text-on-surface-variant opacity-70 mb-1">{contact.label}</div>
                       <div className="text-on-surface font-light">{contact.value}</div>
@@ -99,22 +99,22 @@ export function ContactSection() {
             </div>
 
             {/* Status Indicator */}
-            <div className="pt-4 border-t border-white/[0.05]">
+            <div className="pt-4" style={{ borderTop: '1px solid rgba(71,71,71,0.15)' }}>
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                <span className="text-xs uppercase tracking-widest font-bold text-primary">Accepting engagements</span>
+                <div className="w-1.5 h-1.5 bg-on-surface-variant animate-pulse" />
+                <span className="text-xs uppercase tracking-widest font-bold text-on-surface-variant">Accepting engagements</span>
               </div>
             </div>
           </motion.div>
 
-          {/* Right: Contact Form */}
+          {/* Right: Contact Form — tonal, sharp, underline-only inputs */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit(onSubmit)} className="bg-surface-container-low border border-white/[0.05] rounded-[2rem] p-8 md:p-12 space-y-8">
-              {/* Name */}
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-[#1c1b1b] p-8 md:p-12 space-y-8">
+              {/* Name — underline only */}
               <div>
                 <label htmlFor="name" className="block text-[0.6875rem] font-bold uppercase tracking-widest text-on-surface-variant mb-3">
                   Name
@@ -123,8 +123,8 @@ export function ContactSection() {
                   type="text"
                   id="name"
                   {...register('name')}
-                  className={`w-full bg-surface border-b pb-3 focus:outline-none focus:border-primary transition-all text-on-surface font-light placeholder-on-surface-variant/30 rounded-none
-                    ${errors.name ? 'border-error' : 'border-white/[0.1]'}`}
+                  className={`w-full bg-transparent border-b pb-3 focus:outline-none transition-all text-on-surface font-light placeholder-on-surface-variant/30
+                    ${errors.name ? 'border-error' : 'border-[#474747] focus:border-on-surface'}`}
                   placeholder="Your Name"
                 />
                 {errors.name && (
@@ -132,7 +132,7 @@ export function ContactSection() {
                 )}
               </div>
 
-              {/* Email */}
+              {/* Email — underline only */}
               <div>
                 <label htmlFor="email" className="block text-[0.6875rem] font-bold uppercase tracking-widest text-on-surface-variant mb-3">
                   Email Address
@@ -141,8 +141,8 @@ export function ContactSection() {
                   type="email"
                   id="email"
                   {...register('email')}
-                  className={`w-full bg-surface border-b pb-3 focus:outline-none focus:border-primary transition-all text-on-surface font-light placeholder-on-surface-variant/30 rounded-none
-                    ${errors.email ? 'border-error' : 'border-white/[0.1]'}`}
+                  className={`w-full bg-transparent border-b pb-3 focus:outline-none transition-all text-on-surface font-light placeholder-on-surface-variant/30
+                    ${errors.email ? 'border-error' : 'border-[#474747] focus:border-on-surface'}`}
                   placeholder="address@domain.com"
                 />
                 {errors.email && (
@@ -150,7 +150,7 @@ export function ContactSection() {
                 )}
               </div>
 
-              {/* Message */}
+              {/* Message — underline only */}
               <div>
                 <label htmlFor="message" className="block text-[0.6875rem] font-bold uppercase tracking-widest text-on-surface-variant mb-3">
                   Your Message
@@ -159,8 +159,8 @@ export function ContactSection() {
                   id="message"
                   {...register('message')}
                   rows={4}
-                  className={`w-full bg-surface border-b pb-3 focus:outline-none focus:border-primary transition-all resize-none text-on-surface font-light placeholder-on-surface-variant/30 rounded-none
-                    ${errors.message ? 'border-error' : 'border-white/[0.1]'}`}
+                  className={`w-full bg-transparent border-b pb-3 focus:outline-none transition-all resize-none text-on-surface font-light placeholder-on-surface-variant/30
+                    ${errors.message ? 'border-error' : 'border-[#474747] focus:border-on-surface'}`}
                   placeholder="Detail your inquiry..."
                 />
                 {errors.message && (
@@ -168,15 +168,15 @@ export function ContactSection() {
                 )}
               </div>
 
-              {/* Submit */}
+              {/* Submit — sharp, no rounded */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 rounded-full font-bold uppercase tracking-widest text-[0.6875rem] text-on-primary bg-primary transition-all duration-300 hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-3 mt-4"
+                className="w-full py-4 font-bold uppercase tracking-widest text-[0.6875rem] text-on-primary bg-on-surface transition-all duration-300 hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-3 mt-4"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-3 h-3 border-2 border-on-surface/30 border-t-on-surface animate-spin" />
                     Transmitting...
                   </>
                 ) : (
@@ -192,10 +192,10 @@ export function ContactSection() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-3 p-4 bg-primary/10 border border-primary/20 rounded-xl"
+                  className="flex items-center gap-3 p-4 bg-on-surface/10"
                 >
-                  <FaCheckCircle className="w-4 h-4 text-primary" />
-                  <span className="text-[0.6875rem] font-bold uppercase tracking-widest text-primary">Transmission received.</span>
+                  <FaCheckCircle className="w-4 h-4 text-on-surface" />
+                  <span className="text-[0.6875rem] font-bold uppercase tracking-widest text-on-surface">Transmission received.</span>
                 </motion.div>
               )}
             </form>
@@ -207,7 +207,8 @@ export function ContactSection() {
           initial={{ opacity: 0 }}
           animate={isVisible ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-32 pt-8 border-t border-white/[0.02] flex flex-col md:flex-row justify-between items-center gap-4"
+          className="mt-32 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+          style={{ borderTop: '1px solid rgba(71,71,71,0.1)' }}
         >
           <div className="text-on-surface-variant text-[0.6875rem] font-bold uppercase tracking-widest">
             &copy; {new Date().getFullYear()} {personalInfo.name}.

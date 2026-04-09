@@ -26,12 +26,11 @@ export function FaceTrackToggle({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={`
-          flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 rounded-full
+          flex items-center gap-2 px-3 py-2 md:px-4 md:py-2
           backdrop-blur-xl transition-all duration-300
-          border shadow-lg
           ${isEnabled
-            ? 'bg-[#818CF8]/15 border-[#818CF8]/30 text-[#818CF8] glow-blue'
-            : 'bg-white/[0.04] border-white/[0.08] text-[#94A3B8] hover:text-white hover:border-white/[0.15]'
+            ? 'bg-[#2a2a2a]/80 text-on-surface-variant'
+            : 'bg-[#1c1b1b]/60 text-on-surface-variant hover:text-on-surface'
           }
         `}
         whileHover={{ scale: 1.05 }}
@@ -57,24 +56,24 @@ export function FaceTrackToggle({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] text-xs"
+            className="flex items-center gap-2 px-3 py-1.5 bg-[#1c1b1b]/60 backdrop-blur-xl text-xs"
           >
             {isTracking && faceDetected && (
               <>
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[#94A3B8]">Face detected</span>
+                <div className="w-2 h-2 bg-emerald-400 animate-pulse" />
+                <span className="text-on-surface-variant">Face detected</span>
               </>
             )}
             {isTracking && !faceDetected && (
               <>
-                <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                <span className="text-[#94A3B8]">Searching...</span>
+                <div className="w-2 h-2 bg-amber-400 animate-pulse" />
+                <span className="text-on-surface-variant">Searching...</span>
               </>
             )}
             {!isTracking && (
               <>
-                <div className="w-2 h-2 rounded-full bg-[#818CF8] animate-pulse" />
-                <span className="text-[#94A3B8]">Initializing...</span>
+                <div className="w-2 h-2 bg-on-surface-variant animate-pulse" />
+                <span className="text-on-surface-variant">Initializing...</span>
               </>
             )}
           </motion.div>
@@ -87,7 +86,7 @@ export function FaceTrackToggle({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-xs text-red-400 max-w-xs"
+            className="px-3 py-2 bg-red-500/10 text-xs text-red-400 max-w-xs"
           >
             {error}
           </motion.div>
@@ -100,7 +99,7 @@ export function FaceTrackToggle({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="px-3 py-1.5 rounded-lg bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] text-xs text-[#64748B] max-w-xs text-right"
+            className="px-3 py-1.5 bg-[#1c1b1b]/60 backdrop-blur-xl text-xs text-on-surface-variant max-w-xs text-right"
           >
             Camera data stays local & private
           </motion.div>

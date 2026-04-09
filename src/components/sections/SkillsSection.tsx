@@ -17,10 +17,10 @@ export function SkillsSection() {
     <section
       id="skills"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-24 md:py-32 relative"
-      style={{ backgroundColor: '#0e0e0e' }}
+      className="relative"
+      style={{ paddingTop: '50px', paddingBottom: '200px', backgroundColor: '#0e0e0e' }}
     >
-      <div className="w-full max-w-[1400px] mx-auto px-8 md:px-16 lg:px-32">
+      <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }}>
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -28,7 +28,7 @@ export function SkillsSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 flex flex-col items-start text-left"
         >
-          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary font-medium opacity-80 mb-4">
+          <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-on-surface-variant font-medium opacity-80 mb-4">
             CAPABILITIES
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface tracking-[-0.04em] leading-[0.95]">
@@ -44,11 +44,11 @@ export function SkillsSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-              className={`flex flex-col ${categoryIndex % 3 !== 0 ? 'lg:border-l lg:border-white/[0.05] lg:pl-12' : ''}`}
+              className={`flex flex-col ${categoryIndex % 3 !== 0 ? 'lg:border-l lg:border-[#474747]/20 lg:pl-12' : ''}`}
             >
               {/* Category label */}
-              <div className="border-b border-white/[0.05] pb-4 mb-6">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-on-surface">
+              <div className="pb-4 mb-6" style={{ borderBottom: '1px solid rgba(71,71,71,0.15)' }}>
+                <h3 className="text-sm font-bold uppercase tracking-widest text-on-surface-variant">
                   {category.title}
                 </h3>
               </div>
@@ -80,10 +80,11 @@ export function SkillsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-24 pt-12 border-t border-white/[0.02]"
+          className="mt-24 pt-12"
+          style={{ borderTop: '1px solid rgba(71,71,71,0.1)' }}
         >
           <p className="text-on-surface-variant text-sm font-light uppercase tracking-widest flex items-center gap-4">
-            <span className="w-12 h-[1px] bg-primary/30 block"></span>
+            <span className="w-12 h-[1px] bg-[#474747]/50 block"></span>
             Always exploring emerging paradigms
           </p>
         </motion.div>

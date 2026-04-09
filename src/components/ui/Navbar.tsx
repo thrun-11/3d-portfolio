@@ -50,12 +50,12 @@ export function Navbar() {
         fixed top-0 left-0 right-0 z-40
         transition-all duration-500
         ${isScrolled
-          ? 'bg-[#0e0e0e]/95 backdrop-blur-xl border-b border-white/[0.05]'
+          ? 'bg-[#131313]/95 backdrop-blur-xl'
           : 'bg-transparent'
         }
       `}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 md:py-6">
+      <div style={{ maxWidth: '1400px', marginInline: 'auto', padding: '0 2rem' }} className="py-4 md:py-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.button
@@ -77,12 +77,15 @@ export function Navbar() {
                   relative text-[0.6875rem] font-bold uppercase tracking-[0.2em]
                   transition-colors duration-300
                   ${activeSection === link.id
-                    ? 'text-primary'
-                    : 'text-on-surface-variant hover:text-on-surface'
+                    ? 'text-on-surface'
+                    : 'text-on-surface-variant opacity-70 hover:opacity-100 hover:text-on-surface'
                   }
                 `}
               >
                 {link.label}
+                {activeSection === link.id && (
+                  <span className="absolute -bottom-1.5 left-0 right-0 h-[1px] bg-on-surface" />
+                )}
               </button>
             ))}
           </div>
@@ -90,7 +93,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-on-surface-variant hover:text-on-surface rounded-lg transition-colors"
+            className="md:hidden p-2 text-on-surface-variant hover:text-on-surface transition-colors"
           >
             {isMenuOpen ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
           </button>
@@ -104,7 +107,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0e0e0e]/98 backdrop-blur-xl border-t border-white/[0.05]"
+            className="md:hidden bg-[#131313]/98 backdrop-blur-xl"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
@@ -115,8 +118,8 @@ export function Navbar() {
                     block w-full text-left py-2 text-[0.6875rem] font-bold uppercase tracking-[0.2em]
                     transition-colors duration-300
                     ${activeSection === link.id
-                      ? 'text-primary'
-                      : 'text-on-surface-variant hover:text-on-surface'
+                      ? 'text-on-surface'
+                      : 'text-on-surface-variant opacity-70 hover:opacity-100'
                     }
                   `}
                 >
